@@ -4,21 +4,16 @@
     <div class="card-header border-0"
          :class="type === 'dark' ? 'bg-transparent': ''">
       <div class="row align-items-center">
-        <div class="col-lg-7 col-md-12 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-sm-12">
           <h3 class="mb-0" :class="type === 'dark' ? 'text-white': ''">
             {{title}}
           </h3>
         </div>
-        <div class="col-lg-5 text-right p-0 pr-3 row" style="height:43px">
-          <div class="col-md-8 pr-1">
+        <div class="col-lg-12 col-sm-12 text-right p-0 row" style="height:43px">
+          <div class="col-md-12 ml-3 mt-2 pb-3">
             <base-input v-model="search" 
                         :placeholder="'Cari ' + title + ' disini...'" 
                         addon-left-icon="ni ni-zoom-split-in"></base-input>
-          </div>
-          <div class="col-md-4 pl-1">
-            <router-link :to="'/master/' + title + '/add'">
-              <base-button class="w-100" type="primary" icon="ni ni-fat-add">Baru</base-button>
-            </router-link>
           </div>
         </div>
       </div>
@@ -90,6 +85,9 @@
           </td>
         </template>
       </base-table>
+      <p v-if="filteredData.length == 0"
+              style="font-weight:bold;text-align:center;"
+              class="mt-4 mb-3">Data kosong :(</p>
     </div>
 
     <div class="card-footer d-flex justify-content-end"
@@ -133,7 +131,7 @@
 
       getMasterData : function(url_local){
         var app = this;
-        let url = baseURL + "/lumeraAPI" + url_local;
+        let url = baseURL + "/tv.netAPI/" + url_local;
         
         this.$swal({
             icon: 'warning',
