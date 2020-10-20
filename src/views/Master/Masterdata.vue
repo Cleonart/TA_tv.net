@@ -46,8 +46,8 @@
             url : 'v1/customer/get.php'
           },
 
-          "Tagihan" : {
-            url : 'v1/bill/get.php'
+          "Services" : {
+            url : 'v1/services/get.php'
           }
 
         }

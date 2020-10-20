@@ -8,9 +8,6 @@ module.exports = {
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 6
       }),
-      new webpack.ProvidePlugin({
-        mapboxgl: 'mapbox-gl',
-      }),
     ]
   },
   pwa: {

@@ -21,24 +21,17 @@ export default new Router({
           component: () => import(/* webpackChunkName: "demo" */ './views/Dashboard.vue')
         },
         {
-          path: '/pos/transaction/new',
-          name: 'newpos',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Pos/posNew.vue')
+          path: '/:officer_id/new-instalation/',
+          name: 'Pemasangan Baru',
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          component: () => import(/* webpackChunkName: "demo" */ './views/Pos/NewInstalation.vue')
         },
         {
-          path: '/master/:selector',
-          name: 'master',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Master/Masterdata.vue')
-        },
-        {
-          path: '/admin/:selector',
-          name: 'master',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Master/Masterdata.vue')
-        },
-        {
-          path: '/master/:selector/:masteredit_mode',
-          name: 'master',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Master/Masteredit.vue')
+          path: 'master/:selector',
+          name: "Daftar Pelanggan", 
+          component: () => import('./views/Master/Masterdata.vue')
         }
       ]
     },

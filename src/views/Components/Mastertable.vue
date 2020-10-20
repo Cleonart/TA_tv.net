@@ -46,7 +46,7 @@
             </span>
 
             <!-- text -->
-            <span v-if="tableData.type == 'price'">
+            <span v-if="tableData.type == 'currency'">
               Rp.{{formatRupiah(tableData.data)}}
             </span>
 

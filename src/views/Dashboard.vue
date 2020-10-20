@@ -5,21 +5,20 @@
     :center="coordinates"
     :zoom="13"
     :minZoom="minZoom"
-    :maxZoom="maxZoom"
-  >
-  <span>
-    <MglMarker v-for="customer in data" :coordinates="customer.customer_loc" :color="customer.customer_color" v-bind:key="customer.customer_id" >
-      <MglPopup :coordinates="customer.customer_loc" anchor="top">
-        <VCard> 
-          <div style="margin-left:20px;margin-right:20px">
-            <p>{{customer.customer_id}} - {{customer.customer_name}}</p>
-            <p>{{customer.customer_paid}} MEMBAYAR</p>
-            <base-button type="primary">Data Lengkap</base-button>
-          </div> 
-        </VCard>
-      </MglPopup>
-    </MglMarker>
-  </span>
+    :maxZoom="maxZoom">
+    <span>
+      <MglMarker v-for="customer in data" :coordinates="customer.customer_loc" :color="customer.customer_color" v-bind:key="customer.customer_id" >
+        <MglPopup :coordinates="customer.customer_loc" anchor="top">
+          <VCard> 
+            <div style="margin-left:20px;margin-right:20px">
+              <p>{{customer.customer_id}} - {{customer.customer_name}}</p>
+              <p>{{customer.customer_paid}} MEMBAYAR</p>
+              <base-button type="primary">Data Lengkap</base-button>
+            </div> 
+          </VCard>
+        </MglPopup>
+      </MglMarker>
+    </span>
   </MglMap>
 </template>
 
@@ -55,15 +54,18 @@ export default {
           customer_color : "#e74c3c"
         }
       ]
-    };
+   };
   }
 };
 </script>
+
 <style type="text/css">
+  
   .mgl-map-wrapper{
     width:100%;
     height: 100vh;
     position: absolute;
     z-index: 99;
   }
+
 </style>

@@ -4,14 +4,13 @@
       <template slot="links">
 
         <sidebar-item :link="{name: 'Dashboard', icon: 'ni ni-tv-2 text-blue', path: '/dashboard'}"/>
-        <sidebar-item :link="{name: 'Transaksi Baru', icon: 'ni ni-money-coins text-blue', path: '/pos/transaction/new'}"/>
+        <sidebar-item :link="{name: 'Pemasangan Baru', icon: 'ni ni-money-coins text-blue', path: '/my_id/new-instalation'}"/>
 
         <h6 class="navbar-heading text-muted ml-4 mb-0 mt-3">Master Data <i class="ni ni-bold-down"></i></h6>
         <span>
-          <sidebar-item :link="{name: 'Staff', icon: 'ni ni-single-02 text-blue', path: '/master/Staff'}"/>
-          <sidebar-item :link="{name: 'Pasien', icon: 'ni ni-badge text-red', path: '/master/Patients'}"/>
-          <sidebar-item :link="{name: 'Produk', icon: 'ni ni-tag text-orange', path: '/master/Product'}"/>
-          <sidebar-item :link="{name: 'Layanan', icon: 'ni ni-glasses-2 text-yellow', path: '/master/Services'}"/>
+          <sidebar-item :link="{name: 'Daftar Pelanggan', icon: 'ni ni-single-02 text-blue', path: '/master/Pelanggan'}"/>
+          <sidebar-item :link="{name: 'Tagihan dan Transaksi', icon: 'ni ni-tag text-orange', path: '/master/Product'}"/>
+          <sidebar-item :link="{name: 'Layanan', icon: 'ni ni-tag text-orange', path: '/master/Services'}"/>
         </span>
         
         <h6 class="navbar-heading text-muted ml-4 mb-0 mt-3">POS <i class="ni ni-bold-down"></i></h6>
