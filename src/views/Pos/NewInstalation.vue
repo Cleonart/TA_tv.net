@@ -69,17 +69,17 @@
 						<span style="font-size:13.5px">
 							<div class="row mb-1 mt-0">
 								<div class="col-6">Biaya Paket</div>
-								<div class="col-6 text-right">{{formatRupiah(250000)}}</div>
+								<div class="col-6 text-right">{{formatRupiah(price.packet)}}</div>
 							</div>
 
 							<div class="row mb-1 mt-3">
 								<div class="col-6">Pemasangan</div>
-								<div class="col-6 text-right">{{formatRupiah(50000)}}</div>
+								<div class="col-6 text-right">{{formatRupiah(price.admin)}}</div>
 							</div>
 
 							<div class="row mb-1 mt-3 mb-4">
 								<div class="col-6" style="font-size:17px;font-weight:bold">Biaya Total</div>
-								<div class="col-6 text-right" style="font-size:17px;margin-top:3px;">{{formatRupiah(300000)}}</div>
+								<div class="col-6 text-right" style="font-size:17px;margin-top:3px;">{{formatRupiah(price.total)}}</div>
 							</div>
 						</span>
 						<base-button type="primary" @click="validateData()" class="w-100">Pemasangan Baru</base-button>
@@ -93,9 +93,9 @@
 <script>
 
 	import { MglMap, MglMarker } from "vue-mapbox";
-	import { formatRupiah } from '../../functions/universal.js';
+	import { baseURL, formatRupiah } from '../../functions/universal.js';
 	import flatPicker from "vue-flatpickr-component";
-	//const axios = require('axios');
+	const axios = require('axios');
 
 	export default{
 		
@@ -122,14 +122,61 @@
 					accounts_long : "",
 					officer_id : "",
 				},
-				services : ["S13-Paket Phoenix-20K/bln"]
+				price : {
+					packet : 0,
+					admin : 50000,
+					total : 0,
+				},
+				services : []
 			}
+		},
+
+		watch : {
+
+			"data.accounts_service" : function (val) {
+				var service = val.split("-");
+				this.price.packet = service[2];
+				this.price.total = parseInt(this.price.admin) + parseInt(this.price.packet);
+			}
+
 		},
 
 		methods : {
 
 			formatRupiah : function (value) {
 				return formatRupiah(value.toString(), "Rp. ");
+			},
+
+			getServiceData : function () {
+
+				this.$swal({
+					icon: 'warning',
+					title: 'Mohon tunggu',
+					text: 'Sedang Mengambil data...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+					timerProgressBar: true,
+					onBeforeOpen: () => {
+						this.$swal.showLoading()
+					},
+				});
+
+				var app = this;
+				axios.get(baseURL + "/tv.netAPI/v1/services/get.php")
+					.then(function(response){
+						console.log(response);
+						app.$swal.close();
+						var i = 0;
+						var service_temp = [];
+						for(i; i < response.data.raw_data.length;i++){
+							var temp_services = response.data.raw_data[i][0].data + "-" + response.data.raw_data[i][1].data + "-" + response.data.raw_data[i][2].data; 
+							service_temp[i] = temp_services;
+						}
+						app.services = service_temp;
+					})
+					.catch(function(error){
+						console.log(error);
+					});
 			},
 
 			getLotAndLong : function () {
@@ -144,10 +191,48 @@
 					this.data.accounts_join_date != "" && 
 					this.data.accounts_lat != "" && 
 					this.data.accounts_long != ""){
+
+					// getting service id
 					var service = this.data.accounts_service.split("-");
-					this.accounts_service = service[0];
+					this.data.accounts_service = service[0] + "." + service[1];
+
+					var getData = "?accounts_name=" + this.data.accounts_name;
+					getData    += "&accounts_service=" + service[0] + "." + service[1];
+					getData    += "&accounts_join_date=" + this.data.accounts_join_date;
+					getData    += "&accounts_lat=" + this.data.accounts_lat;
+					getData    += "&accounts_long=" + this.data.accounts_long;
+					getData    += "&price_packet=" + this.price.packet;
+					getData    += "&price_admin="  + this.price.admin;
+					getData    += "&price_total=" + this.price.total; 
+
+					this.$swal({
+						icon: 'warning',
+						title: 'Mohon tunggu',
+						text: 'Sedang Mengirim data...',
+						allowOutsideClick: false,
+						showConfirmButton: false,
+						timerProgressBar: true,
+						onBeforeOpen: () => {
+							this.$swal.showLoading()
+						},
+					});
+
+					var app = this;
 
 					// sending data to server
+					axios.get(baseURL + "/tv.netAPI/v1/services/new_instalation.php" + getData)
+						.then(function(response){
+							console.log(response);
+							app.$swal({
+								icon: 'success',
+								title: 'Penambahan Data Berhasil',
+								confirmButtonText: 'Lanjut',
+								text: 'Data berhasil ditambahkan',
+							});
+						})
+						.catch(function(error){
+							console.log(error);
+						})
 				}
 
 				else{
@@ -157,7 +242,9 @@
 		},
 
 		created(){
+			this.getServiceData();
 			this.data.officer_id = this.$route.params.officer_id;
+			this.price.total = parseInt(this.price.admin) + parseInt(this.price.packet);
 		}
 	}
 
