@@ -1,6 +1,14 @@
 <?php
+	
+	//[REVISI] 
+	
+	/* Changelog | 25 Oktober 2020
+	   + Penambahan Latitude dan Longtitude pada Billing
+	   + Penambahan Fungsi Pembayaran Tagihan
+	*/
+
 	require '../api_conf.php';
-	include '../functions.php';
+	require '../functions.php';
 
 	function getBillingAll($dale){
 		$customer = $dale -> kueri("SELECT accounts_id FROM `accounts`");
@@ -13,7 +21,7 @@
 		print_r($billing);
 		return json_encode($billing);	
 	}
-
+	
 	function getBillingById($dale, $id){
 		$customer = $dale -> kueri(getCustomerDataKueri($id));
 		$data = json_decode($customer);
@@ -36,6 +44,10 @@
 
 		return $billing;
 	}
+
+	function payBill($dale, $id, $officer_id){
+		
+	}
 	
 	function getCustomerDataKueri($accounts_id){
 		$kueri  = "";
@@ -47,6 +59,17 @@
 		$kueri .= "WHERE `accounts_id` = '".$accounts_id."' ";
 		$kueri .= "ORDER BY `transaction_month` DESC, `transaction_year` DESC";
 		return $kueri;
+	}
+
+	function payBillKueri($array_of_data){
+		
+		// generate transaction ID
+		$transaction_id = "TRC" . rand(10000000, 99999999);
+		
+		$kueri  = "";
+		$kueri .= "INSERT INTO `transaction` ";
+		$kueri .= "(`transaction_id`) ";
+		$kueri .= "VALUES ('".$transaction_id."', '".."')";
 	}
 
 	getBillingAll($dale);
