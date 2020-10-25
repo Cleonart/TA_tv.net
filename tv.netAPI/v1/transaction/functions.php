@@ -27,6 +27,8 @@
 		$billing = array(
 			"accounts_id"   => $data[0] -> accounts_id,
 			"accounts_name" => $data[0] -> accounts_name,
+			"accounts_loc"  => array($data[0] -> accounts_lat, 
+						 $data[0] -> accounts_long),
 			"service"       => $data[0] -> service_name,
 			"billing"       => json_decode($per),
 			"billing_price" => $total
