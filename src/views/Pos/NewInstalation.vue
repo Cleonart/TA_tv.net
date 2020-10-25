@@ -83,7 +83,9 @@
 							</div>
 						</span>
 						<base-button type="primary" @click="validateData()" class="w-100">Pemasangan Baru</base-button>
+						<p class="mt-4 mb-1 text-danger" style="font-size:12px;font-weight:bold;text-align:center">* Pemasangan sudah termasuk dengan pembayaran bulan pertama</p>
 					</form>
+
 				</template>
 			</card>
 		</div>
@@ -197,7 +199,7 @@
 					this.data.accounts_service = service[0] + "." + service[1];
 
 					var getData = "?accounts_name=" + this.data.accounts_name;
-					getData    += "&accounts_service=" + service[0] + "." + service[1];
+					getData    += "&accounts_service=" + service[0];
 					getData    += "&accounts_join_date=" + this.data.accounts_join_date;
 					getData    += "&accounts_lat=" + this.data.accounts_lat;
 					getData    += "&accounts_long=" + this.data.accounts_long;
