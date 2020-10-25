@@ -1,4 +1,4 @@
-<template>
+===================================<template>
   <div>
     <!-- legend -->
     <div class="legend">
@@ -41,11 +41,16 @@
       <span>
         <MglMarker v-for="customer in data" :coordinates="customer.customer_loc" :color="customer.customer_color" v-bind:key="customer.customer_id" >
           <MglPopup :coordinates="customer.customer_loc" anchor="top">
-            <VCard> 
+            <VCard>
+              <!-- dont forget to making card -->
               <div style="margin-left:20px;margin-right:20px">
-                <p>{{customer.customer_id}} - {{customer.customer_name}}</p>
-                <p>{{customer.customer_paid}} MEMBAYAR</p>
-                <base-button type="primary">Data Lengkap</base-button>
+                <!-- nama customer, bulan menunggak -->
+                <p>CU1212</p>
+                <p>Chrisdityra Lengkey</p>
+                <p>2 Bulan Tagihan</p>
+                <p>Tidak ada tagihan bulan ini</p>
+                <base-button type="primary">Data Pelanggan</base-button>
+                <base-button type="success">Bill</base-button>
               </div> 
             </VCard>
           </MglPopup>
@@ -57,6 +62,8 @@
 
 <script>
 import { MglMap, MglMarker, MglPopup  } from "vue-mapbox";
+import {baseURL} from "../functions/universal.js";
+const axios = require('axios');
 
 export default {
   components: {
@@ -88,6 +95,24 @@ export default {
         }
       ]
    };
+  },
+  methods : {
+    getData : function(){
+      let url = baseURL + "/tv.netAPI/v1/transaction/";
+      var app = this;
+      axios.get()
+          .then(function(response){
+            console.log(response);
+            app.data = response.data;
+          })
+          .catch(error){
+            console.log(error);
+          }
+    }
+  },
+  
+  created(){
+    this.getData();
   }
 };
 </script>
