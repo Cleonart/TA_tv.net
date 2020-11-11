@@ -48,6 +48,10 @@
 
           "Services" : {
             url : 'v1/services/get.php'
+          },
+
+          "Transaksi" : {
+            url : 'v1/billing/get.php'
           }
 
         }

@@ -9,7 +9,7 @@
         <h6 class="navbar-heading text-muted ml-4 mb-0 mt-3">Master Data <i class="ni ni-bold-down"></i></h6>
         <span>
           <sidebar-item :link="{name: 'Daftar Pelanggan', icon: 'ni ni-single-02 text-blue', path: '/master/Pelanggan'}"/>
-          <sidebar-item :link="{name: 'Tagihan dan Transaksi', icon: 'ni ni-tag text-orange', path: '/master/Product'}"/>
+          <sidebar-item :link="{name: 'Tagihan dan Transaksi', icon: 'ni ni-tag text-orange', path: '/master/Transaksi'}"/>
           <sidebar-item :link="{name: 'Layanan', icon: 'ni ni-tag text-orange', path: '/master/Services'}"/>
         </span>
         

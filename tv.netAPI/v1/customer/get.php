@@ -63,14 +63,14 @@
 			$json_data[$i][1]['class'] = "";
 
 			// selected service
-			$json_data[$i][4]['data']  = $data[$i] -> accounts_service;
-			$json_data[$i][4]['type']  = "text";
-			$json_data[$i][4]['class'] = "";
+			$json_data[$i][2]['data']  = $data[$i] -> accounts_service;
+			$json_data[$i][2]['type']  = "text";
+			$json_data[$i][2]['class'] = "";
 
 			// tanggal bergabung
-			$json_data[$i][4]['data']  = $data[$i] -> join_date;
-			$json_data[$i][4]['type']  = "text";
-			$json_data[$i][4]['class'] = "";
+			$json_data[$i][3]['data']  = $data[$i] -> accounts_join_date;
+			$json_data[$i][3]['type']  = "text";
+			$json_data[$i][3]['class'] = "";
 		}
 	}
 

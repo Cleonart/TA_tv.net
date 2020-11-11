@@ -1,5 +1,9 @@
 
+/*
+<<<<<<< HEAD
 export let baseURL = "http://192.168.1.12";
+=======*/
+export let baseURL = "http://192.168.1.2";
 
 // generate random number id
 // return INT - Random Number between 1000000 to 9999999

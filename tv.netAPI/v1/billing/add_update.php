@@ -57,7 +57,7 @@
 		$json_header = [];
 		$json_header[0] = "ID";
 		$json_header[1] = "Nama Layanan";
-		$json_header[2] = "Harga Layanan / Bulan";
+		$json_header[2] = "Harga Layanan";
 		$json_settings = array('search_index' => 1);
 
 		$output = array('raw_data'     => $json_data, 
