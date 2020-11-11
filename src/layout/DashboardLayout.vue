@@ -12,13 +12,6 @@
           <sidebar-item :link="{name: 'Tagihan dan Transaksi', icon: 'ni ni-tag text-orange', path: '/master/Transaksi'}"/>
           <sidebar-item :link="{name: 'Layanan', icon: 'ni ni-tag text-orange', path: '/master/Services'}"/>
         </span>
-        
-        <h6 class="navbar-heading text-muted ml-4 mb-0 mt-3">POS <i class="ni ni-bold-down"></i></h6>
-        <span>
-          <sidebar-item :link="{name: 'Inventaris', icon: 'ni ni-box-2 text-blue', path: '/admin/Inventaris'}"/>
-          <sidebar-item :link="{name: 'Kasir', icon: 'ni ni-credit-card text-blue', path: '/admin/Cashier'}"/>
-        </span>
-
       </template>
     </side-bar>
     <div class="main-content" :data="sidebarBackground">

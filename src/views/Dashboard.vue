@@ -1,4 +1,4 @@
-===================================<template>
+<template>
   <div>
     <!-- legend -->
     <div class="legend">
@@ -45,11 +45,13 @@
               <!-- dont forget to making card -->
               <div style="margin-left:20px;margin-right:20px">
                 <!-- nama customer, bulan menunggak -->
-                <p>CU1212</p>
-                <p>Chrisdityra Lengkey</p>
-                <p>2 Bulan Tagihan</p>
-                <p>Tidak ada tagihan bulan ini</p>
-                <base-button type="primary">Data Pelanggan</base-button>
+                <p style="margin-bottom: 5px;font-size: 12px;font-weight: bold;margin-top: 10px;">{{customer.customer_id}}</p>
+                <p style="margin-bottom: 1px;">{{customer.customer_name}}</p>
+                <p class="mt-0" v-if="1">{{customer.billing.num_of_month}} Bulan Tagihan</p>
+                <p v-else>Tidak ada tagihan bulan ini</p>
+                <h4 class="mb-0">Layanan {{customer.customer_ser}}</h4>
+                <p>{{formatRupiah(customer.billing_price)}}</p>
+                <base-button type="primary" class="mb-2">Data Pelanggan</base-button>
                 <base-button type="success">Bill</base-button>
               </div> 
             </VCard>
@@ -62,7 +64,7 @@
 
 <script>
 import { MglMap, MglMarker, MglPopup  } from "vue-mapbox";
-import {baseURL} from "../functions/universal.js";
+import {baseURL, formatRupiah} from "../functions/universal.js";
 const axios = require('axios');
 
 export default {
@@ -98,16 +100,20 @@ export default {
   },
   methods : {
     getData : function(){
-      let url = baseURL + "/tv.netAPI/v1/transaction/";
+      let url = baseURL + "/tv.netAPI/v1/transaction/get.php";
       var app = this;
-      axios.get()
+      axios.get(url)
           .then(function(response){
             console.log(response);
             app.data = response.data;
           })
-          .catch(error){
+          .catch(function(error){
             console.log(error);
-          }
+          }) 
+    },
+
+    formatRupiah : function(value){
+      return formatRupiah(String(value), "Rp. ");
     }
   },
   
