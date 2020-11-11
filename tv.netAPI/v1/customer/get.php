@@ -71,6 +71,31 @@
 			$json_data[$i][3]['data']  = $data[$i] -> accounts_join_date;
 			$json_data[$i][3]['type']  = "text";
 			$json_data[$i][3]['class'] = "";
+
+			// status akun
+			$account_status = $data[$i] -> accounts_status;
+			
+			# STATUS AKUN AKTIF
+			if($account_status == 100){
+				$json_data[$i][4]['data']  = "AKTIF";
+				$json_data[$i][4]['type']  = "badge";
+				$json_data[$i][4]['class'] = "badge badge-success";
+			}
+
+			# STATUS AKUN TIDAK AKTIF KARENA BELUM AKTIVASI
+			else if($account_status == 400){
+				$json_data[$i][4]['data']  = "BELUM DIAKTIVASI";
+				$json_data[$i][4]['type']  = "badge";
+				$json_data[$i][4]['class'] = "badge badge-warning";
+			}
+
+			# STATUS AKUN TIDAK AKTIF
+			else if($account_status == 0){
+				$json_data[$i][4]['data']  = "TIDAK AKTIF";
+				$json_data[$i][4]['type']  = "badge";
+				$json_data[$i][4]['class'] = "badge badge-danger";
+			}
+			
 		}
 	}
 
@@ -85,6 +110,7 @@
 		$json_header[1] = "Nama Pelanggan";
 		$json_header[2] = "Layanan";
 		$json_header[3] = "Tanggal Bergabung";
+		$json_header[4] = "Status";
 		$json_settings = array('search_index' => 1);
 
 		$output = array('raw_data'     => $json_data, 

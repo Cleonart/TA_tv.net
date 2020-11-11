@@ -11,7 +11,7 @@ function calculateMonth($last_month, $last_year, $month_now, $year_now){
 
 	// hanya bulan
 	if($year_now == $last_year){
-		for($i = $last_month + 1; $i < $month_now; $i++){
+		for($i = $last_month; $i < $month_now; $i++){
 			$detail['months'][$k] = array(
 				"month" => selectMonth($i),
 				"year"  => $year_now

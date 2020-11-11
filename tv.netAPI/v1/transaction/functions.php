@@ -1,27 +1,19 @@
 <?php
-	
-	//[REVISI] 
-	
-	/* Changelog | 25 Oktober 2020
-	   + Penambahan Latitude dan Longtitude pada Billing
-	   + Penambahan Fungsi Pembayaran Tagihan
-	*/
 
-	require '../api_conf.php';
-	require '../functions.php';
+	include '../functions.php';
 
 	function getBillingAll($dale){
 		$customer = $dale -> kueri("SELECT accounts_id FROM `accounts`");
 		$data = json_decode($customer);
 		$billing;
 
-		for($i=0; $i < sizeof($data);$i++){
+		for($i=0; $i < sizeof($data) - 1;$i++){
 			$billing[$i] = getBillingById($dale, $data[$i] -> accounts_id);
 		}
-		print_r($billing);
+
 		return json_encode($billing);	
 	}
-	
+
 	function getBillingById($dale, $id){
 		$customer = $dale -> kueri(getCustomerDataKueri($id));
 		$data = json_decode($customer);
@@ -29,24 +21,37 @@
 		$month_last = $data[0] -> transaction_month;
 		$year_last  = $data[0] -> transaction_year;
 
-		$per = calculateMonth($month_last, $year_last, 10,2020);
+		$per = calculateMonth($month_last, $year_last, 11,2020);
 		$total = json_decode($per) -> num_of_month * $data[0] -> service_nominal;
- 
+ 			
+ 		$month_text = "";
+ 		$months_data = json_decode($per) -> months;
+ 		for($i = 0; $i < sizeof($months_data);$i++){
+ 			if($i == sizeof($months_data) - 1){
+ 				$month_text .= $months_data[$i] -> month . " " . $months_data[$i] -> year;
+ 			}
+ 			else{
+ 				$month_text .= $months_data[$i] -> month . " " . $months_data[$i] -> year . ", ";
+ 			}
+ 		}
+
+ 		$color = "";
+ 		if(json_decode($per) -> num_of_month == 0){  $color = "#2ecc71"; }
+ 		else if($data[0] -> accounts_status == 400){ $color = "#f1c40f"; }
+ 		else{ $color = "#e74c3c"; }
+
 		$billing = array(
-			"accounts_id"   => $data[0] -> accounts_id,
-			"accounts_name" => $data[0] -> accounts_name,
-			"accounts_loc"  => array($data[0] -> accounts_lat, 
-						 $data[0] -> accounts_long),
-			"service"       => $data[0] -> service_name,
+			"customer_id"   => $data[0] -> accounts_id,
+			"customer_name" => $data[0] -> accounts_name,
+			"customer_loc"  => [$data[0] -> accounts_long, $data[0] -> accounts_lat],
+			"customer_ser"  => $data[0] -> service_name,
 			"billing"       => json_decode($per),
-			"billing_price" => $total
+			"billing_price" => $total,
+			"months_text"   => $month_text,
+			"customer_color" => $color
 		);
 
 		return $billing;
-	}
-
-	function payBill($dale, $id, $officer_id){
-		
 	}
 	
 	function getCustomerDataKueri($accounts_id){
@@ -60,18 +65,5 @@
 		$kueri .= "ORDER BY `transaction_month` DESC, `transaction_year` DESC";
 		return $kueri;
 	}
-
-	function payBillKueri($array_of_data){
-		
-		// generate transaction ID
-		$transaction_id = "TRC" . rand(10000000, 99999999);
-		
-		$kueri  = "";
-		$kueri .= "INSERT INTO `transaction` ";
-		$kueri .= "(`transaction_id`) ";
-		$kueri .= "VALUES ('".$transaction_id."', '".."')";
-	}
-
-	getBillingAll($dale);
 
 ?>
