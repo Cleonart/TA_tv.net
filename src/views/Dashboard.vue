@@ -8,7 +8,7 @@
     </div>
     <div class="settings">
       <p>Pengaturan</p>
-      <select class="form-control">
+      <select class="form-control" v-model="month_select">
         <option>Januari</option>
         <option>Februari</option>
         <option>Maret</option>
@@ -22,13 +22,18 @@
         <option>November</option>
         <option>Desember</option>
       </select>
-      <select class="form-control">
+      <select class="form-control" v-model="year_select">
         <option>2020</option>
+        <option>2021</option>
         <option>2022</option>
         <option>2023</option>
         <option>2024</option>
         <option>2025</option>
         <option>2026</option>
+        <option>2027</option>
+        <option>2028</option>
+        <option>2029</option>
+        <option>2030</option>
       </select>
     </div>
     <MglMap
@@ -39,11 +44,18 @@
       :minZoom="minZoom"
       :maxZoom="maxZoom">
       <span>
-        <MglMarker v-for="customer in data" :coordinates="customer.customer_loc" :color="customer.customer_color" v-bind:key="customer.customer_id" >
+        <MglMarker ref="tes" v-for="customer in data" :coordinates="customer.customer_loc" :color="check_color" v-bind:key="customer.customer_id" >
           <MglPopup :coordinates="customer.customer_loc" anchor="top">
             <VCard>
               <!-- dont forget to making card -->
               <div style="margin-left:20px;margin-right:20px">
+
+                <!-- badge -->
+                <div style="margin-left:-3px;margin-top: 15px;margin-bottom: 17px;">
+                  <span v-if="customer.billing.num_of_month == 0" class="badge badge-pill badge-success">Tidak Ada Tagihan</span>
+                  <span v-else class="badge badge-pill badge-danger">Tagihan Belum Dibayar</span>
+                </div>
+
                 <!-- nama customer, bulan menunggak -->
                 <p style="margin-bottom: 5px;font-size: 12px;font-weight: bold;margin-top: 10px;">{{customer.customer_id}}</p>
                 <p style="margin-bottom: 1px;">{{customer.customer_name}}</p>
@@ -52,7 +64,9 @@
                 <h4 class="mb-0">Layanan {{customer.customer_ser}}</h4>
                 <p>{{formatRupiah(customer.billing_price)}}</p>
                 <base-button type="primary" class="mb-2">Data Pelanggan</base-button>
-                <base-button type="success">Bill</base-button>
+                <router-link :to="'/bill/' + customer.customer_id + '-' + month_select_numeric + '-' + year_select">
+                  <base-button v-if="customer.billing.num_of_month > 0" type="success">Bill</base-button>
+                </router-link>
               </div> 
             </VCard>
           </MglPopup>
@@ -75,9 +89,10 @@ export default {
   },
   data() {
     return {
+      check_color : "blue",
       mapStyle: "mapbox://styles/mapbox/streets-v11",
       coordinates: [124.317687, 1.047018],
-      minZoom : 8,
+      minZoom : 3,
       maxZoom : 17,
       mapboxAccessToken : 'pk.eyJ1IjoienJlZGhhcmQiLCJhIjoiY2s4dGI0bzhxMDJjdzNsbGtmOXVtNDNvciJ9.kLnTWH6orAW2JwEn44b73g',
       data : [
@@ -95,21 +110,69 @@ export default {
           customer_paid  : "BELUM",
           customer_color : "#e74c3c"
         }
-      ]
+      ],
+      month_select : "November",
+      month_select_numeric : 11,
+      year_select : "2020"
    };
   },
+  watch : {
+
+    month_select : function(val){
+      this.month_select_numeric = this.reconfigureMonth(val);
+      this.getData(this.reconfigureMonth(val), this.year_select);
+    },
+
+    year_select : function(){
+      this.getData(this.reconfigureMonth(this.month_select), this.year_select);
+    }
+
+  },
   methods : {
-    getData : function(){
-      let url = baseURL + "/tv.netAPI/v1/transaction/get.php";
+    getData : function(local_month_select, local_year_select){
+
+      this.$swal({
+        icon: 'warning',
+        title: 'Mohon tunggu',
+        text: 'Sedang Mengirim data...',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        onBeforeOpen: () => {
+          this.$swal.showLoading()
+        },
+      });
+
+      let url = baseURL + "/tv.netAPI/v1/transaction/get.php?month_select=" + local_month_select + "&year_select=" + local_year_select;
       var app = this;
       axios.get(url)
           .then(function(response){
             console.log(response);
+            app.$swal.close();
             app.data = response.data;
           })
           .catch(function(error){
             console.log(error);
           }) 
+    },
+
+    reconfigureMonth : function (val) {
+      let month_select_numeric = 11;
+      switch(val){
+        case "Januari"   : month_select_numeric = 1; break;
+        case "Februari"  : month_select_numeric = 2; break; 
+        case "Maret"     : month_select_numeric = 3; break;
+        case "April"     : month_select_numeric = 4; break;
+        case "Mei"       : month_select_numeric = 5; break; 
+        case "Juni"      : month_select_numeric = 6; break;
+        case "Juli"      : month_select_numeric = 7; break;
+        case "Agustus"   : month_select_numeric = 8; break; 
+        case "September" : month_select_numeric = 9; break;
+        case "Oktober"   : month_select_numeric = 10; break;
+        case "November"  : month_select_numeric = 11; break; 
+        case "Desember"  : month_select_numeric = 12; break;
+      }
+      return month_select_numeric;
     },
 
     formatRupiah : function(value){
@@ -118,7 +181,8 @@ export default {
   },
   
   created(){
-    this.getData();
+    this.getData(this.reconfigureMonth(this.month_select), this.year_select);
+    console.log(MglMarker);
   }
 };
 </script>

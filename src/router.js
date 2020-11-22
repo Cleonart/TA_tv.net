@@ -32,6 +32,11 @@ export default new Router({
           path: 'master/:selector',
           name: "Daftar Pelanggan", 
           component: () => import('./views/Master/Masterdata.vue')
+        },
+        {
+          path: '/bill/:customer_id',
+          name: "Pembayaran",
+          component: () => import('./views/Pos/PayBill.vue')
         }
       ]
     },

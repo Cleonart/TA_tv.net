@@ -27,7 +27,7 @@
 						</select>
 
 						<!-- calender selector -->
-						<label style="font-size:13px;margin-top:10px"> Tanggal<span style="color: red"> *</span> </label>
+						<label style="font-size:13px;margin-top:10px"> Tanggal<span style="color: red"> *</span></label>
 						<base-input addon-left-icon="ni ni-calendar-grid-58">
 							<flat-picker    slot-scope="{focus, blur}"
 											:config="{dateFormat:'d-m-Y'}"
@@ -230,6 +230,7 @@
 								confirmButtonText: 'Lanjut',
 								text: 'Data berhasil ditambahkan',
 							});
+							app.$router.replace('/');
 						})
 						.catch(function(error){
 							console.log(error);
