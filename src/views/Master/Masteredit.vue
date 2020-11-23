@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="col-xl-12 order-xl-1 p-5">
+		<div class="col-xl-12 order-xl-1 pl-3 pr-3 pt-4">
 			<card shadow type="secondary">
 				<div slot="header" class="bg-white border-0">
 					<div class="row align-items-center">
@@ -246,6 +246,7 @@
 			this.forms     = masterData()[this.selector].inputs;
 			console.log(masterData());
 			this.urlToGet  = baseURL + masterData()[this.selector].urlToGet + "?id=" + this.masteredit_mode;
+			console.log(this.urlToGet);
 			this.urlToPost = baseURL + masterData()[this.selector].urlToPost;
 			this.code      = masterData()[this.selector].code;
 

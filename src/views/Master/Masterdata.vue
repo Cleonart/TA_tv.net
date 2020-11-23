@@ -8,7 +8,7 @@
           <div class="col-lg-12 col-md-10">
             <h1 class="display-2 text-white mt-4" style="line-height:55px">Daftar {{title}}</h1>
             <p class="text-white mt-0 mb-4">Kelola setiap {{title}} dari laman ini</p>
-            <router-link to="/order/tambah">
+            <router-link :to="title + '/add'">
               <base-button type="info" class="mr-3">Tambah {{title}} Baru</base-button>
             </router-link>
             <base-button type="primary" @click="refresh()" class="mr-3 mt-2">Segarkan</base-button>

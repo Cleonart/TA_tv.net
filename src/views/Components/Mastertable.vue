@@ -147,6 +147,7 @@
 
         axios.get(url)
           .then(function(response){
+            console.log(response.data);
             app.Masterdata = response.data;
             app.settings   = app.Masterdata.settings;
             app.$swal.close();

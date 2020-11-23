@@ -22,10 +22,14 @@
 					<label style="font-size:13px;margin-top:10px"> Bulan Tagihan (Bln)<span style="color: red"> *</span></label>
 					<base-input type="text" v-model="data.billing.num_of_month" disabled required="true" placeholder="Nama Pelanggan" style="margin-bottom:10px"></base-input>
 
+					<!-- text 
+					<label style="font-size:13px;margin-top:10px"> Bulan <span style="color: red"> *</span></label>
+					<p>{{(data.months_text)}}</p>-->
+					
 					<label style="font-size:13px;margin-top:10px">Total Tagihan<span style="color: red"> *</span></label>
 					<h2>{{formatRupiah(data.billing_price)}}</h2>
 
-					<base-button type="success" class="w-100 mt-2">Bayar Tagihan</base-button>
+					<base-button @click="pay(data.billing_price)" type="success" class="w-100 mt-2">Bayar Tagihan</base-button>
 					<base-button @click="$router.go(-1)" type="danger" class="w-100 mt-2">Batal</base-button>
 				</template>
 
@@ -43,7 +47,10 @@
 	export default{
 		data(){
 			return{
-				data : ""
+				data  : "",
+				id    : "",
+				month : "",
+				year  : ""
 			}
 		},
 
@@ -73,8 +80,42 @@
 						console.log(response);
 					})
 					.catch(function(error){
+						app.$swal('Gagal mengambil data', "Terjadi kesalahan mengambil data", "error");
 						console.log(error);
 					});
+			},
+
+			pay : function(nominal){
+
+				this.$swal({
+					icon: 'warning',
+					title: 'Mohon tunggu',
+					text: 'Sedang mengirim data...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+					timerProgressBar: true,
+					onBeforeOpen: () => {
+						this.$swal.showLoading()
+					},
+				});
+
+				let raw_data = "?id=" + this.id + "&month_select=" + this.month + "&year_select=" + this.year + "&nominal= " + nominal;
+
+				var app = this;
+				let url = baseURL + "/tv.netAPI/v1/transaction/pay.php" + raw_data;
+
+				axios.get(url)
+					.then(function(response){
+						app.$swal("Pembayaran berhasil", "Berhasil melakukan pembayaran", "success");
+						console.log(response);
+						app.$router.go(-1)
+						
+					})
+					.catch(function(error){
+						app.$swal('Gagal mengirim data', "Terjadi kesalahan mengirim data", "error");
+						console.log(error);
+					});
+
 			},
 
 			formatRupiah : function(val){
@@ -85,10 +126,10 @@
 
 		created(){
 			let raw_data = this.$route.params.customer_id.split("-");
-			let id = raw_data[0];
-			let month = raw_data[1];
-			let year  = raw_data[2];
-			this.getData(id, month, year);
+			this.id = raw_data[0];
+			this.month = raw_data[1];
+			this.year  = raw_data[2];
+			this.getData(this.id, this.month, this.year);
 		}
 	}	
 
