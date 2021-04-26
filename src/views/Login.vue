@@ -1,70 +1,87 @@
 <template>
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-7">
-                <div class="card bg-secondary shadow border-0">
-                    <div class="card-header bg-transparent pb-5">
-                        <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
-                        <div class="btn-wrapper text-center">
-                            <a href="#" class="btn btn-neutral btn-icon">
-                                <span class="btn-inner--icon"><img src="img/icons/common/github.svg"></span>
-                                <span class="btn-inner--text">Github</span>
-                            </a>
-                            <a href="#" class="btn btn-neutral btn-icon">
-                                <span class="btn-inner--icon"><img src="img/icons/common/google.svg"></span>
-                                <span class="btn-inner--text">Google</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body px-lg-5 py-lg-5">
-                        <div class="text-center text-muted mb-4">
-                            <small>Or sign in with credentials</small>
-                        </div>
-                        <form role="form">
-                            <base-input class="input-group-alternative mb-3"
-                                        placeholder="Email"
-                                        addon-left-icon="ni ni-email-83"
-                                        v-model="model.email">
-                            </base-input>
+    <div class="row justify-content-center">
+        <div class="col-lg-12 col-md-12">
+            <div class="card bg-secondary shadow border-0">
+                <div class="card-body px-lg-5 py-lg-5">
+                    <img src="@/assets/logo.png" style="width:50px;margin-bottom:30px;margin-top:20px;">
+                    <form @submit.prevent="logging_in()">
 
-                            <base-input class="input-group-alternative"
-                                        placeholder="Password"
-                                        type="password"
-                                        addon-left-icon="ni ni-lock-circle-open"
-                                        v-model="model.password">
-                            </base-input>
+                        <input  type="text" 
+                                class="form-control mb-2 py-4"
+                                placeholder="Nama Pengguna"
+                                required
+                                v-model="username" />
 
-                            <base-checkbox class="custom-control-alternative">
-                                <span class="text-muted">Remember me</span>
-                            </base-checkbox>
-                            <div class="text-center">
-                                <base-button type="primary" class="my-4">Sign in</base-button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-6">
-                        <a href="#" class="text-light"><small>Forgot password?</small></a>
-                    </div>
-                    <div class="col-6 text-right">
-                        <router-link to="/register" class="text-light"><small>Create new account</small></router-link>
-                    </div>
+                         <input  type="password" 
+                                class="form-control py-4 mb-3"
+                                placeholder="Kata Sandi"
+                                required
+                                v-model="password" />
+
+                        <base-button @click="logging_in()" type="primary" class="mt-2 mb-3">Masuk</base-button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 </template>
 <script>
-  export default {
-    name: 'login',
-    data() {
-      return {
-        model: {
-          email: '',
-          password: ''
+    import {apiEndpoint} from '@/functions/universal.js';
+    const axios = require('axios');
+    const md5 = require('md5');
+
+    export default {
+        name: 'login',
+        data() {
+            return {
+                username : '',
+                password: ''
+            }
+        },
+        methods : {
+            logging_in : function(){
+                
+                if(!this.username || !this.password){
+                    this.$swal("Login Gagal", "Nama pengguna dan kata sandi tidak boleh kosong", "error");
+                    return;
+                }
+
+                this.$swal({
+                    icon: 'warning',
+                    title: 'Mohon tunggu',
+                    text: 'Sedang Mengirim data...',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    onBeforeOpen: () => {
+                        this.$swal.showLoading()
+                    },
+                });
+
+                axios.get(apiEndpoint + "user/login.php?username=" + this.username + "&password=" + this.password)
+                     .then(result => {
+
+                        // Login Failed
+                        if (result.data == "") {
+                            this.$swal("Login Gagal", "Nama Pengguna dan Kata Sandi anda tidak cocok", "error");
+                            return;
+                        }
+                        // Login Success
+                        this.$swal("Login Berhasil", "Login berhasil dilakukan", "success");
+                        localStorage.setItem("login_credential", md5(result.data[0].accounts_debt_collector_status));
+                        this.$router.replace("/dashboard");
+                    })
+            }
+        },
+        created(){
+            if (localStorage.getItem("login_credential") != null){
+                this.$swal("Anda telah login", "Mengarahkan ke halaman utama", "success");
+                this.$router.replace("/dashboard");
+            }
         }
-      }
     }
-  }
 </script>
 <style>
 </style>
+
+// Credential for super user : c4ca4238a0b923820dcc509a6f75849b

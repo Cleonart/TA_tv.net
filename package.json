@@ -25,6 +25,7 @@
     "jspdf-autotable": "^3.5.9",
     "mapbox-gl": "^1.12.0",
     "mapbox-gl-vue": "^2.0.4",
+    "md5": "^2.3.0",
     "nouislider": "14.6.0",
     "pdfmake": "^0.1.66",
     "register-service-worker": "1.7.1",

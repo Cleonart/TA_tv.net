@@ -1,6 +1,7 @@
 
 //export let baseURL = "http://192.168.1.10";
 export let baseURL = "https://cirative.000webhostapp.com";
+export let apiEndpoint = baseURL + "/tv.netAPI/v1/";
 
 // generate random number id
 // return INT - Random Number between 1000000 to 9999999
