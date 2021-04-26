@@ -74,10 +74,11 @@
             }
         },
         created(){
-            if (localStorage.getItem("login_credential") != null){
-                this.$swal("Anda telah login", "Mengarahkan ke halaman utama", "success");
-                this.$router.replace("/dashboard");
+            if (localStorage.getItem("login_credential") == "null" || localStorage.getItem("login_credential") == null){
+                return;
             }
+            this.$swal("Anda telah login", "Mengarahkan ke halaman utama", "success");
+            this.$router.replace("/dashboard");
         }
     }
 </script>

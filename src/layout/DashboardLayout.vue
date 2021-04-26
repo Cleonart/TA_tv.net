@@ -11,6 +11,7 @@
           <sidebar-item :link="{name: 'Daftar Pelanggan', icon: 'ni ni-single-02 text-blue', path: '/master/Pelanggan'}"/>
           <sidebar-item :link="{name: 'Tagihan dan Transaksi', icon: 'ni ni-tag text-orange', path: '/master/Transaksi'}"/>
           <sidebar-item :link="{name: 'Layanan', icon: 'ni ni-tag text-orange', path: '/master/Services'}"/>
+          <base-button type="danger" @click="logout()" class="ml-4 mt-3">Log Out</base-button>
         </span>
       </template>
     </side-bar>
@@ -48,6 +49,21 @@
         if (this.$sidebar.showSidebar) {
           this.$sidebar.displaySidebar(false);
         }
+      },
+      logout : function(){
+        const app = this;
+        this.$swal({
+          title: 'Log Out?',
+          text: "Anda yakin ingin keluar dari akun anda?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#e74c3c',
+          confirmButtonText: 'Ya, Keluar'
+        }).then((result) => {
+          if(result.isConfirmed){
+            localStorage.setItem("login_credential", null);
+            app.$router.replace("/login");
+        }});
       }
     }
   };

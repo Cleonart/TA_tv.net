@@ -1,18 +1,18 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "87dcbb4411ebf894b9ad",
+    "revision": "3ecf6ff2cd5c25e03b4a",
     "url": "/css/app.da2e7d67.css"
   },
   {
-    "revision": "a3bbf709f3e5f95ddcde",
+    "revision": "9e95dc72276e0e4130b9",
     "url": "/css/chunk-08979643.79c177b7.css"
   },
   {
-    "revision": "b32981f54d1b5b93419e",
+    "revision": "96179f4b7abd3861bf65",
     "url": "/css/chunk-vendors.9830f510.css"
   },
   {
-    "revision": "991412dfc9882a0f01b4",
+    "revision": "1b0c7a7b8f9fb2392d26",
     "url": "/css/demo.c21be0b8.css"
   },
   {
@@ -46,6 +46,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "e0ea3f1916671872498288dc2bd40f06",
     "url": "/img/brand/white.png"
+  },
+  {
+    "revision": "f8c2ccd2e74429841cd62bd2669d7b33",
+    "url": "/img/logo.f8c2ccd2.png"
   },
   {
     "revision": "0b8a30b10cbe7708d5f3a4b007c1d665",
@@ -104,32 +108,32 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/theme/vue.jpg"
   },
   {
-    "revision": "2da97d3c5099fe16260e35affc821f91",
+    "revision": "f8013ba311c417ac9abe7144b5b4cb2b",
     "url": "/index.html"
   },
   {
-    "revision": "87dcbb4411ebf894b9ad",
-    "url": "/js/app.a75c3e9d.js"
+    "revision": "3ecf6ff2cd5c25e03b4a",
+    "url": "/js/app.0ca5ea81.js"
   },
   {
-    "revision": "a3bbf709f3e5f95ddcde",
-    "url": "/js/chunk-08979643.33c160f2.js"
+    "revision": "9e95dc72276e0e4130b9",
+    "url": "/js/chunk-08979643.da42457c.js"
+  },
+  {
+    "revision": "d6e7b20ea74bda35a4b4",
+    "url": "/js/chunk-1b837a9c.b2de480d.js"
   },
   {
     "revision": "f431ad39f8360a3e0bee",
     "url": "/js/chunk-27802a98.72414629.js"
   },
   {
-    "revision": "580cdbef5df63474f895",
-    "url": "/js/chunk-372cf108.ad71e102.js"
+    "revision": "96179f4b7abd3861bf65",
+    "url": "/js/chunk-vendors.42325262.js"
   },
   {
-    "revision": "b32981f54d1b5b93419e",
-    "url": "/js/chunk-vendors.c8072078.js"
-  },
-  {
-    "revision": "991412dfc9882a0f01b4",
-    "url": "/js/demo.ba3497ce.js"
+    "revision": "1b0c7a7b8f9fb2392d26",
+    "url": "/js/demo.6cdf440c.js"
   },
   {
     "revision": "2c6190eb814d2dd4d454ae170c43c7c2",
