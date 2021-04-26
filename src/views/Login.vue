@@ -3,7 +3,9 @@
         <div class="col-lg-12 col-md-12">
             <div class="card bg-secondary shadow border-0">
                 <div class="card-body px-lg-5 py-lg-5">
-                    <img src="@/assets/logo.png" style="width:50px;margin-bottom:30px;margin-top:20px;">
+                    <img src="@/assets/logo.png" style="width:50px;margin-bottom:20px;margin-top:20px;">
+                    <h1 class="mb-0 mt-0">Masuk</h1>
+                    <p class="text-muted mt-0" style="font-size:14px;">Silahkan mengisi nama pengguna dan kata sandi anda untuk masuk</p>
                     <form @submit.prevent="logging_in()">
 
                         <input  type="text" 
