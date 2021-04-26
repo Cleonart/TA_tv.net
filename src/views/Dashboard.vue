@@ -1,13 +1,17 @@
 <template>
   <div>
+
     <!-- legend -->
     <div class="legend">
-      <p><i class="ni ni-pin-3" style="color:#e74c3c"></i> BELUM MEMBAYAR</p>
+      <p @click="$refs.tes[6].remove()"><i class="ni ni-pin-3" style="color:#e74c3c"></i> BELUM MEMBAYAR</p>
       <p><i class="ni ni-pin-3" style="color:#2ecc71"></i> LUNAS</p>
       <p style="margin-bottom:10px"><i class="ni ni-pin-3" style="color:#f1c40f"></i> PELANGGAN BARU</p>
     </div>
+
     <div class="settings">
+
       <p>Pengaturan</p>
+
       <select class="form-control" v-model="month_select">
         <option>Januari</option>
         <option>Februari</option>
@@ -22,6 +26,7 @@
         <option>November</option>
         <option>Desember</option>
       </select>
+
       <select class="form-control" v-model="year_select">
         <option>2020</option>
         <option>2021</option>
@@ -35,49 +40,66 @@
         <option>2029</option>
         <option>2030</option>
       </select>
+
+      <p>Visualisasi</p>
+      <select class="form-control" v-model="legend_select">
+        <option value="1">Tampilkan Semua</option>
+        <option value="2">Belum Membayar</option>
+        <option value="3">Sudah Membayar</option>
+      </select>
     </div>
-    <MglMap
-      accessToken="pk.eyJ1IjoienJlZGhhcmQiLCJhIjoiY2s4dGI0bzhxMDJjdzNsbGtmOXVtNDNvciJ9.kLnTWH6orAW2JwEn44b73g"
-      :mapStyle.sync="mapStyle"
-      :center="coordinates"
-      :zoom="13"
-      :minZoom="minZoom"
-      :maxZoom="maxZoom">
-      <span>
-        <MglMarker ref="tes" v-for="customer in data" :coordinates="customer.customer_loc" :color="check_color" v-bind:key="customer.customer_id" >
-          <MglPopup :coordinates="customer.customer_loc" anchor="top">
-            <VCard>
-              <!-- dont forget to making card -->
-              <div style="margin-left:20px;margin-right:20px">
 
-                <!-- badge -->
-                <div style="margin-left:-3px;margin-top: 15px;margin-bottom: 17px;">
-                  <span v-if="customer.billing.num_of_month == 0" class="badge badge-pill badge-success">Tidak Ada Tagihan</span>
-                  <span v-else class="badge badge-pill badge-danger">Tagihan Belum Dibayar</span>
-                </div>
+    <MglMap accessToken="pk.eyJ1IjoienJlZGhhcmQiLCJhIjoiY2s4dGI0bzhxMDJjdzNsbGtmOXVtNDNvciJ9.kLnTWH6orAW2JwEn44b73g"
+            :mapStyle.sync="mapStyle"
+            :center="coordinates"
+            :zoom="13"
+            :minZoom="minZoom"
+            :maxZoom="maxZoom"
+            ref="mapbox">
+            <span>
+              <MglMarker  ref="tes" 
+                          v-for="(customer) in data" 
+                          :coordinates="customer.customer_loc" 
+                          :color="check_color(customer)" 
+                          v-bind:key="customer.customer_id" >
+                  <span slot="marker" style="font-size:25px;">
+                    <i v-if="customer.billing.num_of_month > 0 && (legend_select == 1 || legend_select == 2)" class="ni ni-pin-3" style="color:#e74c3c"></i>
+                    <i v-if="customer.billing.num_of_month == 0 && (legend_select == 1 || legend_select == 3)" class="ni ni-pin-3" style="color:#2ecc71"></i>
+                  </span>
+                  
+                  <MglPopup :coordinates="customer.customer_loc" anchor="top">
+                      <VCard>
+                          <div style="margin-left:20px;margin-right:20px;">
+                              <!-- badge -->
+                              <div style="margin-left:-3px;margin-top: 15px;margin-bottom: 10px;font-size:16px;">
+                                <span v-if="customer.billing.num_of_month == 0" class="badge badge-pill badge-success">Tidak Ada Tagihan</span>
+                                <span v-else class="badge badge-pill badge-danger">Tagihan Belum Dibayar</span>
+                              </div>
 
-                <!-- nama customer, bulan menunggak -->
-                <p style="margin-bottom: 5px;font-size: 12px;font-weight: bold;margin-top: 10px;">{{customer.customer_id}}</p>
-                <p style="margin-bottom: 1px;">{{customer.customer_name}}</p>
-                <p class="mt-0" v-if="1">{{customer.billing.num_of_month}} Bulan Tagihan</p>
-                <p v-else>Tidak ada tagihan bulan ini</p>
-                <h4 class="mb-0">Layanan {{customer.customer_ser}}</h4>
-                <p>{{formatRupiah(customer.billing_price)}}</p>
-                <base-button type="primary" class="mb-2">Data Pelanggan</base-button>
-                <router-link :to="'/bill/' + customer.customer_id + '-' + month_select_numeric + '-' + year_select">
-                  <base-button v-if="customer.billing.num_of_month > 0" type="success">Bill</base-button>
-                </router-link>
-              </div> 
-            </VCard>
-          </MglPopup>
-        </MglMarker>
-      </span>
-    </MglMap>
+                              <!-- nama customer, bulan menunggak -->
+                              <p style="margin-bottom: 5px;font-size: 12px;font-weight: bold;margin-top: 10px;">{{customer.customer_id}}</p>
+                              <p style="margin-bottom: 1px;">{{customer.customer_name}}</p>
+                              
+                              <p class="mt-0" v-if="customer.billing.num_of_month > 0">[{{customer.billing.num_of_month}}] Bulan Tagihan</p>
+                              <p v-else>Tidak ada tagihan bulan ini</p>
+
+                              <h4 class="mb-0">Layanan {{customer.customer_ser}}</h4>
+                              <p>{{formatRupiah(customer.billing_price)}}</p>
+                              <base-button type="primary" class="mb-2">Data Pelanggan</base-button>
+                              <router-link :to="'/bill/' + customer.customer_id + '-' + month_select_numeric + '-' + year_select">
+                                  <base-button v-if="customer.billing.num_of_month > 0" type="success">Bill</base-button>
+                              </router-link>
+                          </div> 
+                      </VCard>
+                  </MglPopup>
+              </MglMarker>
+          </span>
+      </MglMap>
   </div>
 </template>
 
 <script>
-import { MglMap, MglMarker, MglPopup  } from "vue-mapbox";
+import { MglMap, MglMarker, MglPopup , VCard } from "vue-mapbox";
 import {baseURL, formatRupiah} from "../functions/universal.js";
 const axios = require('axios');
 
@@ -85,35 +107,21 @@ export default {
   components: {
     MglMap,
     MglMarker,
-    MglPopup
+    MglPopup,
+    VCard
   },
   data() {
     return {
-      check_color : "blue",
       mapStyle: "mapbox://styles/mapbox/streets-v11",
       coordinates: [124.317687, 1.047018],
       minZoom : 3,
       maxZoom : 17,
       mapboxAccessToken : 'pk.eyJ1IjoienJlZGhhcmQiLCJhIjoiY2s4dGI0bzhxMDJjdzNsbGtmOXVtNDNvciJ9.kLnTWH6orAW2JwEn44b73g',
-      data : [
-        {
-          customer_id    : "CST12112",
-          customer_name  : "Chrisdityra",
-          customer_loc   : [124.316936, 1.046514],
-          customer_paid  : "SUDAH",
-          customer_color : "#2ecc71"
-        },
-        {
-          customer_id    : "CST12132",
-          customer_name  : "Jimmy",
-          customer_loc   : [124.317687, 1.047018],
-          customer_paid  : "BELUM",
-          customer_color : "#e74c3c"
-        }
-      ],
-      month_select : "November",
-      month_select_numeric : 11,
-      year_select : "2020"
+      data : [],
+      month_select : "April",
+      month_select_numeric : 4,
+      year_select : "2021",
+      legend_select : 1,
    };
   },
   watch : {
@@ -121,6 +129,7 @@ export default {
     month_select : function(val){
       this.month_select_numeric = this.reconfigureMonth(val);
       this.getData(this.reconfigureMonth(val), this.year_select);
+      console.log(this.$refs.tes);
     },
 
     year_select : function(){
@@ -129,6 +138,7 @@ export default {
 
   },
   methods : {
+
     getData : function(local_month_select, local_year_select){
 
       this.$swal({
@@ -154,6 +164,13 @@ export default {
           .catch(function(error){
             console.log(error);
           }) 
+    },
+
+    check_color : function(customer){
+      if(customer.billing.num_of_month > 0){
+        return "red";
+      }
+      return "green";
     },
 
     reconfigureMonth : function (val) {
@@ -182,7 +199,7 @@ export default {
   
   created(){
     this.getData(this.reconfigureMonth(this.month_select), this.year_select);
-    console.log(MglMarker);
+    
   }
 };
 </script>

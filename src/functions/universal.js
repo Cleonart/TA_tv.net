@@ -1,8 +1,5 @@
 
-/*
-<<<<<<< HEAD
-export let baseURL = "http://192.168.1.12";
-=======*/
+//export let baseURL = "http://192.168.1.10";
 export let baseURL = "https://cirative.000webhostapp.com";
 
 // generate random number id
