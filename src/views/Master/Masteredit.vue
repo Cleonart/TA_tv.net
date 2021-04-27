@@ -25,6 +25,7 @@
 										v-model="form.text" 
 										:required="form.required"
 										:placeholder="form.placeholder"
+										:disabled="form.disabled"
 										style="margin-bottom:10px"></base-input>
 
 							<!-- currency field -->
@@ -78,7 +79,7 @@
 						</div>
 
 						<hr class="my-4" />
-						<base-button type="primary" @click="validateData()">{{mode}} Data</base-button>
+						<base-button type="primary" v-if="hideButton == false" @click="validateData()">{{mode}} Data</base-button>
 						<base-button outline type="danger" @click="goBack()">Batal</base-button>
 					
 					</form>
@@ -109,6 +110,7 @@
 				urlToPost : '',
 				code : 'STF',
 				mode : 'Tambah',
+				hideButton : false,
 			}
 		},
 		
@@ -239,6 +241,7 @@
 
 		created(){
 			startLoading(this.$swal);
+
 			// get the paramater from router
 			this.masteredit_mode = this.$route.params.masteredit_mode;
 			this.selector        = this.$route.params.selector;   
@@ -250,6 +253,7 @@
 			console.log(this.urlToGet);
 			this.urlToPost = baseURL + masterData()[this.selector].urlToPost;
 			this.code      = masterData()[this.selector].code;
+			this.hideButton = masterData()[this.selector].hideButton;
 
 			// get the data
 			this.getSpecificData();
