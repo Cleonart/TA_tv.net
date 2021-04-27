@@ -11,7 +11,7 @@
           <sidebar-item :link="{name: 'Daftar Pelanggan', icon: 'ni ni-single-02 text-blue', path: '/master/Pelanggan'}"/>
           <sidebar-item :link="{name: 'Tagihan dan Transaksi', icon: 'ni ni-tag text-blue', path: '/master/Transaksi'}"/>
           <sidebar-item :link="{name: 'Layanan', icon: 'ni ni-archive-2 text-blue', path: '/master/Services'}"/>
-          <sidebar-item v-if="validateAdmin()" :link="{name: 'Kelola Akun', icon: 'ni ni-badge text-blue', path: '/master/Services'}"/>
+          <sidebar-item v-if="validateAdmin()" :link="{name: 'Kelola Akun', icon: 'ni ni-badge text-blue', path: '/master/User'}"/>
           <base-button type="danger" @click="logout()" class="ml-4 mt-3">Log Out</base-button>
         </span>
       </template>

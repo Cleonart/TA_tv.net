@@ -52,6 +52,10 @@
 
           "Transaksi" : {
             url : 'v1/billing/get.php'
+          },
+
+          "User" : {
+            url : 'v1/user/get.php'
           }
 
         }
@@ -77,7 +81,7 @@
     },
     created(){
       this.title = this.$route.params.selector;
-      this.url   = this.pageData[this.title].url
+      this.url   = this.pageData[this.title].url;
     }
 
   };

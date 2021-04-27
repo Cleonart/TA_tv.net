@@ -62,7 +62,7 @@
                           :coordinates="customer.customer_loc" 
                           :color="check_color(customer)" 
                           v-bind:key="customer.customer_id" >
-                  <span slot="marker" style="font-size:25px;">
+                  <span slot="marker" style="font-size:30px;">
                     
                     <i v-if="customer.billing.num_of_month > 0 && (legend_select == 1 || legend_select == 2)" 
                        class="ni ni-pin-3" style="color:#e74c3c"></i>

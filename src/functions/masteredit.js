@@ -10,7 +10,8 @@
 export function masterData(){
 
 	let master = {
-		Services  : services()
+		Services  : services(),
+		User : user()
 	}
 	return master;
 }
@@ -53,6 +54,33 @@ function services(){
 		],
 		urlToGet  : '/tv.netAPI/v1/services/get.php',
 		urlToPost : '/tv.netAPI/v1/services/insert_edit.php'
+	}
+	return inputData;
+}
+
+
+function user(){
+	let inputData = {
+		title : "Edit User",
+		code  : "ADM",
+		inputs : [
+		{
+			label : "Nama Pengguna",
+			required : true,
+			text : "",
+			placeholder : "Masukan Nama Pengguna",
+			type : "text"
+		},
+		{
+			label : "Kata Sandi",
+			required : true,
+			text : "",
+			placeholder : "Masukan Kata Sandi",
+			type : "text"
+		}
+		],
+		urlToGet  : '/tv.netAPI/v1/user/get.php',
+		urlToPost : '/tv.netAPI/v1/user/insert_edit.php'
 	}
 	return inputData;
 }

@@ -72,7 +72,7 @@
 						<td><b>NOMINAL PEMBAYARAN</b></td>
 					</thead>
 					<tbody>
-						<tr v-for="transaction in transactions" :key="transaction" style="border-bottom:0.5px solid gray">
+						<tr v-for="transaction in transactions" :key="transaction.transaction_id" style="border-bottom:0.5px solid gray">
 							<td>{{transaction.transaction_id}}</td>
 							<td>{{transaction.transaction_year}}</td>
 							<td>{{transaction.transaction_month}}</td>

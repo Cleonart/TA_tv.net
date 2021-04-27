@@ -93,7 +93,7 @@
 	import flatPicker from "vue-flatpickr-component";
 	import "flatpickr/dist/flatpickr.css";
 	import {masterData} from "../../functions/masteredit.js"; 
-	import {baseURL, generateId, formatRupiah} from "../../functions/universal.js"; 
+	import {baseURL, generateId, formatRupiah, startLoading, stopLoading} from "../../functions/universal.js"; 
 	const axios = require('axios');
 	
 	export default{
@@ -214,6 +214,7 @@
 								app.forms[j].text = response.data[0][i].data;
 								j++;
 							}
+							stopLoading(app.$swal);
 							app.mode = "Ubah";
 						})
 						.catch(function(error) {
@@ -237,7 +238,7 @@
 		},
 
 		created(){
-
+			startLoading(this.$swal);
 			// get the paramater from router
 			this.masteredit_mode = this.$route.params.masteredit_mode;
 			this.selector        = this.$route.params.selector;   
@@ -256,6 +257,7 @@
 			// scroll to top function
 			document.body.scrollTop = 0;
 			document.documentElement.scrollTop = 0;
+			
 		},
 
 		components: {flatPicker}
