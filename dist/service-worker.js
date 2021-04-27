@@ -14,10 +14,10 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.27fd5c5522bb2911c777ec870440d11b.js"
+  "/precache-manifest.d5e25e29716503b363066c95aa23c380.js"
 );
 
-workbox.core.setCacheNameDetails({prefix: "vue-argon-dashboard"});
+workbox.core.setCacheNameDetails({prefix: "tv-net"});
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
