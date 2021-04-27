@@ -39,9 +39,9 @@ export default new Router({
           component: () => import('./views/Pos/PayBill.vue')
         },
         {
-          path: 'master/:selector/:masteredit_mode',
-          name: "Pembayaran",
-          component: () => import('./views/Master/Masteredit.vue')
+          path: 'master/pelanggan/:id',
+          name: "Detail Pelanggan",
+          component: () => import('./views/Customer/Detail.vue')
         }
       ]
     },

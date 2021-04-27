@@ -87,3 +87,27 @@ export function formatTanggal(formattedtanggal){
     
     return format[2] + " " + bulan + " " + format[0];
   }
+
+/*
+	Start Loading
+*/
+export function startLoading(alert_){
+	alert_({
+		icon: 'warning',
+		title: 'Mohon tunggu',
+		text: 'Sedang mengirim data...',
+		allowOutsideClick: false,
+		showConfirmButton: false,
+		timerProgressBar: true,
+		onBeforeOpen: () => {
+			alert_.showLoading()
+		},
+	});
+}
+
+/*
+	End Loading
+*/
+export function stopLoading(alert_){
+	alert_.close();
+}
