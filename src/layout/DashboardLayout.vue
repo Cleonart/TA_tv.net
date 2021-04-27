@@ -11,6 +11,7 @@
           <sidebar-item :link="{name: 'Daftar Pelanggan', icon: 'ni ni-single-02 text-blue', path: '/master/Pelanggan'}"/>
           <sidebar-item :link="{name: 'Tagihan dan Transaksi', icon: 'ni ni-tag text-orange', path: '/master/Transaksi'}"/>
           <sidebar-item :link="{name: 'Layanan', icon: 'ni ni-tag text-orange', path: '/master/Services'}"/>
+          <sidebar-item :link="{name: 'Kelola Akun', icon: 'ni ni-tag text-orange', path: '/master/Services'}"/>
           <base-button type="danger" @click="logout()" class="ml-4 mt-3">Log Out</base-button>
         </span>
       </template>

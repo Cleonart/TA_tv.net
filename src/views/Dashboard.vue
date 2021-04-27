@@ -63,8 +63,10 @@
                           :color="check_color(customer)" 
                           v-bind:key="customer.customer_id" >
                   <span slot="marker" style="font-size:25px;">
+                    
                     <i v-if="customer.billing.num_of_month > 0 && (legend_select == 1 || legend_select == 2)" 
                        class="ni ni-pin-3" style="color:#e74c3c"></i>
+                    
                     <i v-if="customer.billing.num_of_month == 0 && (legend_select == 1 || legend_select == 3)" 
                        class="ni ni-pin-3" style="color:#2ecc71"></i>
                   </span>
