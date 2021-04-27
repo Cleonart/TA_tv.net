@@ -9,9 +9,9 @@
         <h6 class="navbar-heading text-muted ml-4 mb-0 mt-3">Master Data <i class="ni ni-bold-down"></i></h6>
         <span>
           <sidebar-item :link="{name: 'Daftar Pelanggan', icon: 'ni ni-single-02 text-blue', path: '/master/Pelanggan'}"/>
-          <sidebar-item :link="{name: 'Tagihan dan Transaksi', icon: 'ni ni-tag text-orange', path: '/master/Transaksi'}"/>
-          <sidebar-item :link="{name: 'Layanan', icon: 'ni ni-tag text-orange', path: '/master/Services'}"/>
-          <sidebar-item :link="{name: 'Kelola Akun', icon: 'ni ni-tag text-orange', path: '/master/Services'}"/>
+          <sidebar-item :link="{name: 'Tagihan dan Transaksi', icon: 'ni ni-tag text-blue', path: '/master/Transaksi'}"/>
+          <sidebar-item :link="{name: 'Layanan', icon: 'ni ni-archive-2 text-blue', path: '/master/Services'}"/>
+          <sidebar-item v-if="validateAdmin()" :link="{name: 'Kelola Akun', icon: 'ni ni-badge text-blue', path: '/master/Services'}"/>
           <base-button type="danger" @click="logout()" class="ml-4 mt-3">Log Out</base-button>
         </span>
       </template>
@@ -65,6 +65,12 @@
             localStorage.setItem("login_credential", null);
             app.$router.replace("/login");
         }});
+      },
+      validateAdmin : function(){
+        if (localStorage.getItem("login_credential") == "c4ca4238a0b923820dcc509a6f75849b"){
+          return true;
+        }
+        return false;
       }
     }
   };
