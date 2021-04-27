@@ -63,8 +63,10 @@
                           :color="check_color(customer)" 
                           v-bind:key="customer.customer_id" >
                   <span slot="marker" style="font-size:25px;">
-                    <i v-if="customer.billing.num_of_month > 0 && (legend_select == 1 || legend_select == 2)" class="ni ni-pin-3" style="color:#e74c3c"></i>
-                    <i v-if="customer.billing.num_of_month == 0 && (legend_select == 1 || legend_select == 3)" class="ni ni-pin-3" style="color:#2ecc71"></i>
+                    <i v-if="customer.billing.num_of_month > 0 && (legend_select == 1 || legend_select == 2)" 
+                       class="ni ni-pin-3" style="color:#e74c3c"></i>
+                    <i v-if="customer.billing.num_of_month == 0 && (legend_select == 1 || legend_select == 3)" 
+                       class="ni ni-pin-3" style="color:#2ecc71"></i>
                   </span>
                   
                   <MglPopup :coordinates="customer.customer_loc" anchor="top">
@@ -85,7 +87,13 @@
 
                               <h4 class="mb-0">Layanan {{customer.customer_ser}}</h4>
                               <p>{{formatRupiah(customer.billing_price)}}</p>
-                              <base-button type="primary" class="mb-2">Data Pelanggan</base-button>
+                              
+                              <!-- [REDIRECT] to Detail Pelanggan -->
+                              <router-link :to="'/master/pelanggan/' + customer.customer_id">
+                                <base-button type="primary" class="mb-2">Data Pelanggan</base-button>
+                              </router-link>
+
+                              <!-- [REDIRECT] to Bill -->
                               <router-link :to="'/bill/' + customer.customer_id + '-' + month_select_numeric + '-' + year_select">
                                   <base-button v-if="customer.billing.num_of_month > 0" type="success">Bill</base-button>
                               </router-link>
