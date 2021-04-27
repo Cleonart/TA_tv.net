@@ -42,6 +42,11 @@ export default new Router({
           path: 'master/pelanggan/:id',
           name: "Detail Pelanggan",
           component: () => import('./views/Customer/Detail.vue')
+        },
+        {
+          path: 'master/:selector/:masteredit_mode',
+          name: "Masteredit",
+          component: () => import('./views/Master/Masteredit.vue')
         }
       ]
     },

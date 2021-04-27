@@ -26,8 +26,12 @@
 							required="true" 
 							placeholder="Nama Pelanggan" 
 							style="margin-bottom:10px"></base-input>
-					
 			</card>
+
+			<div class="mt-4">
+				<h2>Riwayat Pembayaran</h2>
+			</div>
+			
 		</div>
 	</div>
 </template>
